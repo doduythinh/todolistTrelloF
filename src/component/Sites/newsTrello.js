@@ -3,86 +3,107 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar,Button,Nav,Form,Toast, Container, Row ,Col,InputGroup} from 'react-bootstrap';
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
-import './Sites.css';
+import './newsTrello.css';
 // import { MDBContainer } from "mdbreact";
 
-class Sites extends Component{
+class NewsTrello extends Component{
     constructor(props) {
         super(props);
-        this.ischangeState = false
         this.state = {
             name:"",
             order:0,
+            id:""
         }
     }
-    onchange = (event) => {
+
+    //get take data
+    onChangeList = (event) => {
         event.preventDefault();
         console.log(event.target.value)
         this.setState({name:event.target.value})
     }
-    clickToSite = (event) => {
-        event.preventDefault();
-        this.setState({order:this.state.order+1})
-        this.props.onAddSite(this.state.name,this.state.order)
-    }
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     console.log(prevProps.ongetSite())
-    //     if(this.props.ongetSite() !== prevProps.ongetSite())
-    //     {
-    //         this.ischangeState = true
-    //     }
-    // }
-    componentWillUnmount() {
-         this.ischangeState = false
+
+    // add to list
+    adđToList = async (event) => {
+        event.preventDefault()
+        let countListname;
+        if(!this.props.listName)
+        {
+            countListname = 0
+        }
+        else {
+            countListname = Object.keys(this.props.listNews).length;
+        }
+        await this.setState({order:countListname + 1})
+        this.props.onAddNews(this.state.name,this.state.order)
     }
 
-    async componentDidMount() {
-        this.ischangeState = true
-        this.props.ongetSite();
+    // delete to list
+    deleteToList = (event) =>{
+        event.preventDefault()
+        let id = Object.keys(this.props.listNews.id)
+        console.log(id)
+        this.props.onDeleteNews(this.state.order,this.state.name);
+    }
+
+    componentDidMount() {
+           this.props.ongetNews();
     }
 
     render() {
-        // const scrollContainerStyle = { width: "800px", maxHeight: "400px" };
-        let mapdata = Object.keys(this.props.listName).map((key) => {
-               return <Row>
-                             <Col>
-                                <Toast>
-                                    <Toast.Header>
-                                        <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
-                                        <strong className="mr-auto">Trello</strong>
-                                    </Toast.Header>
-                                    <p id={key.name}>{this.props.listName[key].name}</p>
-                                    <Form onSubmit={this.clickToSite}>
-                                        <Toast.Body> <input
-                                            type="text"
-                                            className="form-control"
-                                            id="formGroupExampleInput"
-                                            onChange={this.onchange}
-                                        /></Toast.Body>
-                                    </Form>
-                                    <Button variant="success" onClick={this.clickToSite}  >Thêm danh sách</Button>{' '}
-                                </Toast>
-                            </Col>
-                        </Row>
+            let mapListName = () => {
+                if(!this.props.listNews) return null;
+                    return Object.keys(this.props.listNews).map((id) => {
+                            return <Row className="item">
+                                <Col>
+                                    <Toast >
+                                        <Toast.Header onClick={this.deleteToList}>
+                                            <strong className="mr-auto">Trello</strong>
+                                        </Toast.Header>
+                                        <p key={id}>{this.props.listNews[id].name}</p>
+                                    </Toast>
+                                </Col>
+                            </Row>
+                        }
+                    )
             }
-        )
         return (
-            <div>
-                {mapdata}
+            <div className="wrapper">
+                {mapListName()}
+                <Row>
+                    <Col>
+                        <Toast>
+                            <Form onSubmit={this.adđToList}>
+                                <Toast.Body> <input
+                                    type="text"
+                                    className="form-control"
+                                    id="formGroupExampleInput"
+                                    onChange={this.onChangeList}
+                                /></Toast.Body>
+                                <Button variant="success" onClick={this.adđToList}  >Thêm danh sách</Button>{' '}
+                            </Form>
+                        </Toast>
+                    </Col>
+                </Row>
             </div>
         )
     }
 }
+
 const mapStateToProps = state => {
     return {
         site1: state.main.site1,
-        listName:state.main.name,
+        listNews:state.main.name,
+        order:state.main.order
     }
 }
+
 const mapDispatchToProps = dispatch => {
     return {
-        onAddSite:(name,order)=>dispatch(actions.AddSite(name,order)),
-        ongetSite:()=>dispatch(actions.getSite())
+        onAddNews:(name,order)=>dispatch(actions.AddSite(name,order)),
+        ongetNews:()=>dispatch(actions.getSite()),
+        onDeleteNews:(order,name)=>dispatch(actions.deleteNewsSite(name,order))
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Sites);
+
+export default connect(mapStateToProps,mapDispatchToProps)(NewsTrello);
