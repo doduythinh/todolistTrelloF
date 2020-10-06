@@ -7,6 +7,7 @@ export const GET_SITES_TRELLO_FAIL = 'GET_SITES_TRELLO_FAIL';
 export const ADD_SITE_UI = 'ADD_SITE_UI';
 export const DELETE_NEWS = 'DELETE_NEWS';
 export const DELETE_NEWS_UI = 'DELETE_NEWS_UI';
+export const UPDATE_MEWS_UI = 'UPDATE_MEWS_UI';
 
 
 export const AUTH_LOGIN = 'AUTH_LOGIN';

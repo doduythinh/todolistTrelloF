@@ -6,7 +6,8 @@ export {
     getSiteFail,
     addSiteUI,
     deleteNewsSite,
-    deleteNews
+    deleteNews,
+    updateNews
 } from './newsTrello';
 
 export {

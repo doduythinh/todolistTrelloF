@@ -12,8 +12,12 @@ class NewsTrello extends Component{
         this.state = {
             name:"",
             order:0,
-            id:""
+            id:"",
+            infinitiloop:false
         }
+        this.adđToList = this.adđToList.bind(this);
+        this.onChangeList = this.onChangeList.bind(this);
+        this.updateToList = this.updateToList.bind(this);
     }
 
     //get take data
@@ -26,52 +30,47 @@ class NewsTrello extends Component{
     // add to list
     adđToList = async (event) => {
         event.preventDefault()
-        let countListname;
-        if(!this.props.listName)
+        let countListname = 0;
+        if(this.props.listNews)
         {
-            countListname = 0
-        }
-        else {
             countListname = Object.keys(this.props.listNews).length;
         }
         await this.setState({order:countListname + 1})
         this.props.onAddNews(this.state.name,this.state.order)
     }
-
-    // delete to list
-    deleteToList = (event) =>{
+    //delete to list
+    deleteToList =  (event, id) => {
         event.preventDefault()
-        let id = Object.keys(this.props.listNews.id)
-        console.log(id)
-        this.props.onDeleteNews(this.state.order,this.state.name);
-    }
+         this.props.onDeleteNews(id);
 
+    }
+    updateToList = (event,id) => {
+        event.preventDefault()
+        this.props.onUpdateNews(this.state.name,this.state.order,id);
+    }
     componentDidMount() {
            this.props.ongetNews();
     }
-
     render() {
             let mapListName = () => {
                 if(!this.props.listNews) return null;
                     return Object.keys(this.props.listNews).map((id) => {
-                            return <Row className="item">
-                                <Col>
-                                    <Toast >
-                                        <Toast.Header onClick={this.deleteToList}>
-                                            <strong className="mr-auto">Trello</strong>
+                            return<Col xs={6} key={id}>
+                                    <Toast>
+                                        <Toast.Header onClick={(e) => this.deleteToList(e, id)}>
+                                             <strong className="mr-auto">Trello</strong>
                                         </Toast.Header>
-                                        <p key={id}>{this.props.listNews[id].name}</p>
+                                        <input type="text"
+                                                value={this.props.listNews[id].name}/>
                                     </Toast>
                                 </Col>
-                            </Row>
                         }
                     )
             }
         return (
             <div className="wrapper">
                 {mapListName()}
-                <Row>
-                    <Col>
+                    <Col xs={6}>
                         <Toast>
                             <Form onSubmit={this.adđToList}>
                                 <Toast.Body> <input
@@ -80,11 +79,10 @@ class NewsTrello extends Component{
                                     id="formGroupExampleInput"
                                     onChange={this.onChangeList}
                                 /></Toast.Body>
-                                <Button variant="success" onClick={this.adđToList}  >Thêm danh sách</Button>{' '}
+                                <Button variant="success" onClick={this.adđToList}>Thêm danh sách</Button>
                             </Form>
                         </Toast>
                     </Col>
-                </Row>
             </div>
         )
     }
@@ -102,7 +100,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddNews:(name,order)=>dispatch(actions.AddSite(name,order)),
         ongetNews:()=>dispatch(actions.getSite()),
-        onDeleteNews:(order,name)=>dispatch(actions.deleteNewsSite(name,order))
+        onDeleteNews:(id)=>dispatch(actions.deleteNewsSite(id)),
+        onUpdateNews:(name,order,id)=>dispatch(actions.updateNews(name,order,id))
     }
 }
 

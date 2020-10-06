@@ -36,15 +36,25 @@ export const addSiteUI= (item) => {
         item: item
     }
 }
-export const deleteNewsSite = (name,order) => {
+export const deleteNewsSite = (id) => {
     return {
         type:actionTypes.DELETE_NEWS_UI,
-        order:order,
-        name:name
+        // order:order,
+        // name:name,
+        id:id
     }
 }
-export const deleteNews = () => {
+export const deleteNews = (name) => {
     return {
         type:actionTypes.DELETE_NEWS,
+        data:name
+    }
+}
+export const updateNews = (name,order,id) => {
+    return {
+        type:actionTypes.UPDATE_MEWS_UI,
+        name:name,
+        order:order,
+        id:id
     }
 }

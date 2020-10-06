@@ -8,22 +8,20 @@ const innitalState = {
     userId: null,
     error: null,
     loading: false,
-    id:[]
 }
 const TrelloSite = (action, state) => {
     return updateobject(state, {site1: true})
 }
 const GetSiteTrelloTure = (action, state) => {
-    // console.log("reducer sites",action.site)
-    // console.log("action name",action.order,action.name)
-    console.log("123456",action.id)
-    return updateobject(state, {name: action.name,id:action.name.id})
+    console.log("updateobjectupdateobject", {name: action.name});
+    return updateobject(state, {name: action.name})
 }
 
 const AddSiteUI = (action, state) => {
-    // console.log("[...state.name, action.name]", {...state.name, action});
-    console.log("[...state.name, action.name]", action.order,action.item);
     return updateobject(state, {name: {...state.name, action}})
+}
+const deleteSiteUI = (action,state) => {
+    return updateobject(state, {name:{...state.name,action}})
 }
 const reducer = (state = innitalState, action) => {
     switch (action.type) {
@@ -32,9 +30,12 @@ const reducer = (state = innitalState, action) => {
         case actiontypes.GET_SITES_TRELLO_TRUE:
             return GetSiteTrelloTure(action, state);
         case actiontypes.ADD_SITE_UI:
-            console.log("123456",action.item)
-            return AddSiteUI(action.item, state);
-        default:
+            // console.log("123456",action.item)
+            return AddSiteUI(action, state);
+        // case actiontypes.DELETE_NEWS:
+        //     console.log("123delelt",action.item)
+        //     return deleteSiteUI(action.item,state)
+            default:
             return state
     }
 }
