@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar,Button,Nav,Form,Toast, Container, Row ,Col,InputGroup} from 'react-bootstrap';
+import { DropdownItem,Button,Nav,Form,Toast,
+    Dropdown, DropdownToggle ,Col,DropdownMenu,Container} from 'react-bootstrap';
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
 import './newsTrello.css';
+import HorizontalScroll from 'react-scroll-horizontal';
 // import { MDBContainer } from "mdbreact";
 
 class NewsTrello extends Component{
@@ -13,11 +15,9 @@ class NewsTrello extends Component{
             name:"",
             order:0,
             id:"",
-            infinitiloop:false
         }
         this.adđToList = this.adđToList.bind(this);
         this.onChangeList = this.onChangeList.bind(this);
-        this.updateToList = this.updateToList.bind(this);
     }
 
     //get take data
@@ -44,23 +44,40 @@ class NewsTrello extends Component{
          this.props.onDeleteNews(id);
 
     }
-    updateToList = (event,id) => {
+    changeListNews = (event,id) => {
         event.preventDefault()
+            let countListname = 0;
+            if(this.props.listNews)
+            {
+                countListname = Object.keys(this.props.listNews).length;
+            }
+            this.setState({order:countListname + 1,name:event.target.value})
         this.props.onUpdateNews(this.state.name,this.state.order,id);
     }
     componentDidMount() {
            this.props.ongetNews();
     }
+
     render() {
             let mapListName = () => {
                 if(!this.props.listNews) return null;
                     return Object.keys(this.props.listNews).map((id) => {
-                            return<Col xs={6} key={id}>
+                            return<Col key={id} xs={3}>
                                     <Toast>
                                         <Toast.Header onClick={(e) => this.deleteToList(e, id)}>
-                                             <strong className="mr-auto">Trello</strong>
+                                             <strong md={4}
+                                                     className="mr-auto">Trello</strong>
                                         </Toast.Header>
-                                        <input type="text"
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            // onChange={(e)=>this.changeListNews(e,id)}
+                                            onKeyPress={(e)=> {
+                                                if (e.keyCode === "13") {
+                                                   this.changeListNews();
+                                                }
+                                            }}
+                                            // type="text" ref={(input)=> this.text = input}
                                                 value={this.props.listNews[id].name}/>
                                     </Toast>
                                 </Col>
@@ -69,9 +86,9 @@ class NewsTrello extends Component{
             }
         return (
             <div className="wrapper">
-                {mapListName()}
-                    <Col xs={6}>
-                        <Toast>
+                { mapListName()}
+                    <Col  xs={3}>
+                        <Toast >
                             <Form onSubmit={this.adđToList}>
                                 <Toast.Body> <input
                                     type="text"

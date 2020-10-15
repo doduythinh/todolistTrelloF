@@ -19,6 +19,7 @@ class Logins extends Component {
         }
     }
     componentDidMount() {
+        console.log(123456,this.props.authencation)
         if(!this.props.authencation !=="/main")
         {
             this.props.onRedirect();
@@ -90,6 +91,8 @@ class Logins extends Component {
 }
 // state reducer redux
 const mapStateToProps = state => {
+    console.log("121", state.auth.token)
+    console.log("12345",)
     return{
         loading:state.auth.loading,
         token:state.auth.token,

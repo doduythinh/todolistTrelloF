@@ -13,7 +13,7 @@ const TrelloSite = (action, state) => {
     return updateobject(state, {site1: true})
 }
 const GetSiteTrelloTure = (action, state) => {
-    console.log("updateobjectupdateobject", {name: action.name});
+    // console.log("updateobjectupdateobject", {name: action.name});
     return updateobject(state, {name: action.name})
 }
 
