@@ -8,6 +8,10 @@ export const ADD_SITE_UI = 'ADD_SITE_UI';
 export const DELETE_NEWS = 'DELETE_NEWS';
 export const DELETE_NEWS_UI = 'DELETE_NEWS_UI';
 export const UPDATE_MEWS_UI = 'UPDATE_MEWS_UI';
+export const GET_NEWS_UI = 'GET_NEWS_UI';
+export const ADD_DETAIL_NEWS = 'ADD_DETAIL_NEWS';
+export const GET_LIST_DETAIL_NEWS = 'GET_LIST_DETAIL_NEWS';
+export const LIST_DETAIL_NEWS = 'LIST_DETAIL_NEWS';
 
 
 export const AUTH_LOGIN = 'AUTH_LOGIN';

@@ -13,7 +13,7 @@ import { GrClearOption } from "react-icons/gr";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { TiLockClosedOutline } from "react-icons/ti";
 import { BsFillStarFill } from "react-icons/bs";
-import Sites from "../Sites/newsTrello";
+import Sites from "../Sites/newsTrellos";
 import {connect} from "react-redux";
 class BackgroundImagePage extends Component{
     render() {

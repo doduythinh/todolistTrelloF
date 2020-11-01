@@ -7,7 +7,11 @@ export {
     addSiteUI,
     deleteNewsSite,
     deleteNews,
-    updateNews
+    updateNews,
+    getById,
+    addNewsDetail,
+    getDetailNews,
+    getListDetailNews
 } from './newsTrello';
 
 export {

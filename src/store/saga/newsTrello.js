@@ -35,7 +35,7 @@ export function* addNews(action) {
 export function* delelteNews(action) {
     const token = localStorage.getItem("access_token")
     let id = action.id
-    console.log("action.id", action.id);
+    console.log("1234567delete", action.id);
     const queryParams = '?auth=' + token;
     const url  = `todolisttrello/${id}.json` + queryParams;
     try
@@ -65,4 +65,37 @@ export function* updateNews(action){
         yield put(actions.getSiteFail(e))
     }
 
+}
+export  function* getDetailNewsx() {
+    const token = localStorage.getItem("access_token")
+    const queryParams = '?auth=' + token + '&orderBy="userId"';
+    const url = `listStatusNews.json` + queryParams;
+    try
+    {
+        const response = yield axios.get(url)
+        // console.log("123456saga",response.data)
+        yield put(actions.getDetailNews(response.data))
+    }
+    catch (e) {
+        yield put(actions.getSiteFail(e))
+    }
+}
+export function* addDetailNews(action) {
+    const token = localStorage.getItem("access_token")
+    // let id = action.id
+    const paramdetail = {
+        nameDetail:action.nameDetail,
+        orderDetail:action.orderDetail,
+    }
+    const queryParams = '?auth='+token
+    const url = `listStatusNews.json` + queryParams;
+    try
+    {
+       const response =  yield axios.post(url,paramdetail)
+        console.log(response)
+        yield getDetailNewsx()
+    }
+    catch (e) {
+        yield put(actions.getSiteFail(e))
+    }
 }

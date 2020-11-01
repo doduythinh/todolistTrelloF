@@ -1,46 +1,59 @@
-import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar,Button,
-    FormControl,ListGroup,FormGroup,Form,Input } from 'react-bootstrap';
-import  { FacebookLoginButton }  from 'react-social-login-buttons';
-import  { GoogleLoginButton }  from 'react-social-login-buttons';
-import  { GithubLoginButton }  from 'react-social-login-buttons';
-import "./logins.css";
+import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { InputGroup} from 'react-bootstrap'
+import  { FacebookLoginButton }  from 'react-social-login-buttons'
+import  { GoogleLoginButton }  from 'react-social-login-buttons'
+import  { GithubLoginButton }  from 'react-social-login-buttons'
+import "./logins.css"
 import {connect} from "react-redux";
 import * as actions from '../../../store/actions/index';
 import Spinner from "../../../component/UI/Spinner/Spinner";
 import { Redirect } from 'react-router-dom';
+import { InputLabel,Paper,Grid,Typography,FormControl,Button,Input,FormHelperText,
+    FormControlLabel,Checkbox
+} from '@material-ui/core'
+import { withFormik } from 'formik'
+import * as Yup from 'yup'
+
 class Logins extends Component {
     constructor(props) {
         super(props);
         this.state  = {
             email:"",
-            password:""
+            password:"",
+            login:false
         }
     }
     componentDidMount() {
-        console.log(123456,this.props.authencation)
-        if(!this.props.authencation !=="/main")
+        console.log("authencation",this.props.authencation)
+        if(this.props.authencation !=="/main1")
         {
             this.props.onRedirect();
         }
     }
-    // submit call api
     submitLogin = (event) => {
         event.preventDefault()
+        // if(this.props.isAuthencated)
+        // {
+        //     this.setState( { login: true } );
+        // }
+        // else {
+        //     this.props.history.push('/main');
+        // }
         this.props.onLogin(this.state.email,this.state.password)
     }
     // event take change
-    onchangerander = (event) => {
+    onchangerhandle = (event) => {
+        event.preventDefault()
         let emailvalue = this.textInputone.value;
         let passwordvalue = this.textInputtwo.value;
-        console.log("123",emailvalue,passwordvalue)
+        // console.log("123",emailvalue,passwordvalue)
         this.setState({email:emailvalue,password:passwordvalue})
     }
     // render html in cappital
     render(){
         let value = null
-        console.log("12312312",this.props.isAuthencated)
+        // console.log("12312312",this.props.isAuthencated)
         if(this.props.isAuthencated)
         {
             value = <Redirect to={this.props.authencation} />
@@ -51,54 +64,91 @@ class Logins extends Component {
             loading = <Spinner />
         }
         return (
-           <Form className="login-form">
-               {value}
-               {loading}
-               <h1>
-                   <span className="font-weight-bold">Trello Fake</span>.com
-               </h1>
-               <h2 className="text-center">Welcome</h2>
-               <FormGroup>
-                   <label>Email</label>
-                   <FormControl
-                       ref={(input) => this.textInputone = input}
-                       type="email" placeholder="Email" onChange={this.onchangerander} />
-               </FormGroup>
-               <FormGroup>
-                   <label>Password</label>
-                   <FormControl
-                       ref={(input) => this.textInputtwo = input}
-                       type="password" placeholder="Password" onChange={this.onchangerander} />
-               </FormGroup>
-               <button
-                   className="btn-lg btn-dark btn-lock"
-                   onClick={this.submitLogin}>
-                   Login</button>
-               <div className="text-center pt-3">
-                   Or continue with your social account
-               </div>
-               <FacebookLoginButton className="mt-3 mb-3" />
-               <GoogleLoginButton className="mt-3 mb-3" />
-               <GithubLoginButton className="mt-3 mb-3"  />
-               <div className="text-center">
-                   <a href="/sign-up">Sign up</a>
-                   <span className="p-2"></span>
-                   <a href="/sign-up">Forgot - Passwword</a>
-               </div>
-           </Form>
+            <div>
+                {value}
+                {loading}
+            <Grid container justify='center' alignContent='center'>
+                <Grid item xs={6} md={4}>
+                    <Paper elevation={4} style={{ padding: '20px 15px', marginTop: '30px' }}>
+                        <Typography supplied="headline" gutterBottom>
+                            SignIn
+                        </Typography>
+                        {/*{console.log("erroremail",!!this.props.errors.email)}*/}
+                        <FormControl fullWidth margin='normal' error={!!this.props.errors.email}>
+                            <InputLabel>Email</InputLabel>
+                            <Input
+                                name='email' fullWidth
+                                inputRef={(input) => this.textInputone = input}
+                                defaultValue={this.props.values.email}
+                                onChange={this.onchangerhandle}
+                            />
+                            {/*{console.log(this.props.values.email,this.props.errors.email)}*/}
+                            <FormHelperText>{this.props.errors.email}</FormHelperText>
+                        </FormControl>
+                        {/*{console.log("errorpassword",!!this.props.errors.password)}*/}
+                        <FormControl fullWidth margin='normal' error={!!this.props.errors.password}>
+                            <InputLabel>Password</InputLabel>
+                            <Input  fullWidth
+                                    name='password'
+                                   type='password'
+                                    inputRef={(input) => this.textInputtwo = input}
+                                   onChange={this.onchangerhandle}
+                                    defaultValue={this.props.values.password}
+                            />
+                            {/*{console.log(this.props.values.password,this.props.errors.password)}*/}
+                            <FormHelperText>{this.props.errors.password}</FormHelperText>
+                        </FormControl>
+                        <FormControlLabel
+                            control={
+                                <Checkbox />
+                            }
+                            label='Receive new letter'
+                        />
+                        <FormControl  fullWidth margin='normal'>
+                                <Button
+                                    variant="contained"
+                                    color='primary'
+                                    type='submit'
+                                    onClick={this.submitLogin}
+                                >
+                                    Signup
+                                </Button>
+                        </FormControl>
+                        <FacebookLoginButton />
+                        <GoogleLoginButton />
+                        <GithubLoginButton />
+                    </Paper>
+                </Grid>
+            </Grid>
+            </div>
         )
     }
 }
+const FormikForm = withFormik({
+    mapPropsToValues() { // Init form field
+        return {
+            email: 'abc',
+            password: '123',
+        }
+    },
+    validationSchema: Yup.object().shape({ // Validate form field
+        email: Yup.string()
+            .required('Username is required')
+            .min(5, 'Username must have min 5 characters')
+            .max(10, 'Username have max 10 characters'),
+        password: Yup.number()
+            .required('password is required')
+            .min(5, 'Username must have min 5 characters')
+            .max(10, 'Username have max 10 characters'),
+    }),
+})(Logins)
 // state reducer redux
 const mapStateToProps = state => {
-    console.log("121", state.auth.token)
-    console.log("12345",)
+    // console.log("pathmain",state.auth.pathmain)
     return{
         loading:state.auth.loading,
-        token:state.auth.token,
-        userId:state.auth.userId,
         isAuthencated:state.auth.token != null,
-        authencation: state.auth.pathmain
+        authencation: state.auth.path
     }
 }
 // call api from action in redux saga
@@ -106,7 +156,6 @@ const mapDispatchToProps = dispatch => {
     return{
         onLogin: (email,pasword)=> dispatch(actions.auLoginTrue(email,pasword)),
         onRedirect: ()=>dispatch(actions.reDirectPathSignIn("/main"))
-
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Logins)
+export default connect(mapStateToProps,mapDispatchToProps)(FormikForm)

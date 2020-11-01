@@ -26,7 +26,8 @@ export function* signIn(action){
         console.log("api login",response)
         yield localStorage.setItem('access_token',response.data.idToken)
         yield localStorage.setItem('userId',response.data.localId)
-        yield put(actions.signInSuccess(response.data.idToken,response.data.localId),alert('login thanh cong'))
+        yield put(actions.signInSuccess(response.data.idToken,response.data.localId))
+         console.log("dang nhap thanh cong")
     }
     catch (e) {
         yield  put(actions.auLoginFail(e))
@@ -51,7 +52,7 @@ export function* signUp(action){
         yield put(actions.auLoginFail(e))
     }
 }
-// export function* authcheckStateSaga(action) {
+// export function* authcheckStateSaga() {
 //     const token  = yield localStorage.getItem('token');
 //     if(!token)
 //     {

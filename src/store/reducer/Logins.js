@@ -7,11 +7,12 @@ const initialState = {
     error: null,
     loading:false,
     loadingSignUp:true,
-    path: "/login",
-    pathmain: "/main"
+    path: "/main",
+    pathlogin: "/login"
 }
 const signInTokenTrue = (action,state) => {
-    return updateobject(state,{token:action.idToken,userId:action.userId,error:null,loadding:false})
+    console.log("action.tokenaction.token", action.token)
+    return updateobject(state,{token:action.token,userId:action.userId,error:null,loadding:false})
 }
 const loginFail  = (action,state) => {
     return updateobject(state,{error: action.error,loading: true})
@@ -20,13 +21,14 @@ const signUpTrue = (action,state) => {
     return updateobject(state,{token:action.idToken,userId:action.userId,error:null,loading:false})
 }
 const RedirectSinUp = (action,state) => {
-    return updateobject(state,{path:action.path,loading:false})
+    return updateobject(state,{pathlogin:action.pathlogin,loading:false})
 }
 const RedirectSinIn = (action,state) => {
-    console.log("signIn",action.path)
+    // console.log("signIn",action.path)
     return updateobject(state,{path:action.path})
 }
 const reducer = (state =initialState,action) =>{
+    // console.log("action reducer",action)
     switch (action.type) {
         case actionTypes.LOGIN_SUCCESS_TOKEN : return signInTokenTrue(action,state);
         case actionTypes.AUTH_LOGIN_FAIL : return loginFail(action,state);

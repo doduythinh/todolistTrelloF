@@ -58,3 +58,29 @@ export const updateNews = (name,order,id) => {
         id:id
     }
 }
+export const getById = (id) =>{
+    return {
+        type: actionTypes.GET_NEWS_UI,
+        id:id
+    }
+}
+export const addNewsDetail = (nameDetail,orderDetail) => {
+    return {
+        type:actionTypes.ADD_DETAIL_NEWS,
+        nameDetail:nameDetail,
+        orderDetail:orderDetail
+    }
+}
+export const getDetailNews = (listNews) => {
+    // console.log("123456action",listNews)
+    return {
+        type: actionTypes.LIST_DETAIL_NEWS,
+        listNews: listNews,
+    }
+
+}
+export const getListDetailNews = () => {
+    return {
+        type:actionTypes.GET_LIST_DETAIL_NEWS
+    }
+}

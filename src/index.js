@@ -15,7 +15,7 @@ import { Maincall,login } from './store/saga/index';
 const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 
 const rootReducer = combineReducers({
-  main:Main,
+    main:Main,
     auth:Auth
 })
 const sagamidleware = createSagaMiddleware();
