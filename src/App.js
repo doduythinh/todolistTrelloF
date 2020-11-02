@@ -12,20 +12,20 @@ import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 const asyncMain = asyncComponent(()=>{
     return import('./containers/Main/main');
 })
-const asyncLogin = asyncComponent(()=>{
-    return import('./containers/Main/main');
-})
-console.log("123456",asyncMain)
+// const asyncLogin = asyncComponent(()=>{
+//     return import('./containers/Main/main');
+// })
+// console.log("123456",asyncMain)
 class App extends Component {
     componentDidMount() {
-        this.props.onTryAutoSignup();
+        // this.props.onTryAutoSignup();
     }
 
     render(){
         let route = (
             <Switch>
               <Route path="/signup" component={SignIn} />
-              <Route exact path="/login" component={Logins} />
+              <Route path="/login" component={Logins} />
               <Redirect to="/login" />
             </Switch>
       )
@@ -34,9 +34,9 @@ class App extends Component {
             {
                 route = (
                     <Switch>
-                            <Route path="/main" component={asyncMain} />
+                            <Route path="/main" component={Main} />
                             <Route path="/signup" component={SignIn} />
-                            <Route exact path="/login" component={Logins} />
+                            <Route path="/login" component={Logins} />
                             <Redirect to="/main" />
                     </Switch>
                 )
@@ -44,6 +44,7 @@ class App extends Component {
         return (
           <div className="App">
               {route}
+              {/*{console.log("route",route)}*/}
           </div>
         );
       }
@@ -56,7 +57,7 @@ const mapSateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onTryAutoSignup: ()=>dispatch(actions.authCheckState())
+        // onTryAutoSignup: ()=>dispatch(actions.authCheckState())
     }
 }
 export default withRouter(connect(mapSateToProps,mapDispatchToProps)(App));

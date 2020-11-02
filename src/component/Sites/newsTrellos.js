@@ -27,7 +27,6 @@ class NewsTrellos extends Component {
         this.addStatusDetail = this.addStatusDetail.bind(this)
         this.onChangeStatusDetail = this.onChangeStatusDetail.bind(this)
     }
-
     //get take data
     onChangeStatus = (event) => {
         event.preventDefault();
@@ -133,7 +132,7 @@ class NewsTrellos extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log()
+    // console.log("state to props ",state.main)
     return {
         listStatus: state.main.name,
         order: state.main.order,

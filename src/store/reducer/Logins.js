@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actiontypes';
 import { updateobject } from "../../share/utility";
-
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 const initialState = {
     token:null,
     userId:null,
@@ -11,7 +12,7 @@ const initialState = {
     pathlogin: "/login"
 }
 const signInTokenTrue = (action,state) => {
-    console.log("action.tokenaction.token", action.token)
+    // console.log("action.tokenaction.token", action.token)
     return updateobject(state,{token:action.token,userId:action.userId,error:null,loadding:false})
 }
 const loginFail  = (action,state) => {
@@ -39,4 +40,9 @@ const reducer = (state =initialState,action) =>{
             return state
     }
 }
-export default reducer;
+const persistConfig = {
+    key: 'auth',
+    storage: storage,
+    whitelist: ['token']
+};
+export default persistReducer(persistConfig,reducer);

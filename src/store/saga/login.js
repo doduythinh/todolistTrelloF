@@ -27,7 +27,7 @@ export function* signIn(action){
         yield localStorage.setItem('access_token',response.data.idToken)
         yield localStorage.setItem('userId',response.data.localId)
         yield put(actions.signInSuccess(response.data.idToken,response.data.localId))
-         console.log("dang nhap thanh cong")
+        yield alert("dang nhap thanh cong")
     }
     catch (e) {
         yield  put(actions.auLoginFail(e))

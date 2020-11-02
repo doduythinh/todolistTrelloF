@@ -25,11 +25,11 @@ class Logins extends Component {
         }
     }
     componentDidMount() {
-        console.log("authencation",this.props.authencation)
-        if(this.props.authencation !=="/main1")
-        {
-            this.props.onRedirect();
-        }
+        // console.log("authencation",this.props.authencation)
+        // if(this.props.authencation !=="/main1")
+        // {
+        //     this.props.onRedirect();
+        // }
     }
     submitLogin = (event) => {
         event.preventDefault()
@@ -127,8 +127,8 @@ class Logins extends Component {
 const FormikForm = withFormik({
     mapPropsToValues() { // Init form field
         return {
-            email: 'abc',
-            password: '123',
+            email:'kyn12@gmail.com',
+            password:'123456',
         }
     },
     validationSchema: Yup.object().shape({ // Validate form field
@@ -155,7 +155,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         onLogin: (email,pasword)=> dispatch(actions.auLoginTrue(email,pasword)),
-        onRedirect: ()=>dispatch(actions.reDirectPathSignIn("/main"))
+        // onRedirect: ()=>dispatch(actions.reDirectPathSignIn("/main"))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(FormikForm)
