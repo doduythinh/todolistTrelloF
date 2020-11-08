@@ -36,7 +36,7 @@ export function* delelteNews(action) {
     const token = localStorage.getItem("access_token")
     let id = action.id
     console.log("1234567delete", action.id);
-    const queryParams = '?auth=' + token;
+    const queryParams = '?auth=' + token
     const url  = `todolisttrello/${id}.json` + queryParams;
     try
     {
@@ -66,15 +66,32 @@ export function* updateNews(action){
     }
 
 }
-export  function* getDetailNewsx() {
+
+export  function* getDetailNewsx(action) {
     const token = localStorage.getItem("access_token")
-    const queryParams = '?auth=' + token + '&orderBy="userId"';
+    const id = action.id
+    const queryParams = `?auth=` + token + `&` +`idNews=${id}`;
     const url = `listStatusNews.json` + queryParams;
     try
     {
         const response = yield axios.get(url)
-        // console.log("123456saga",response.data)
+        console.log("123456saga",response.data)
         yield put(actions.getDetailNews(response.data))
+    }
+    catch (e) {
+        yield put(actions.getSiteFail(e))
+    }
+}
+export  function* getDetailNewsById(action) {
+    const token = localStorage.getItem("access_token")
+    let id = action.id
+    // console.log("id",id)
+    const queryParams = '?auth=' + token;
+    const url = `listStatusNews/${id}.json` + queryParams;
+    try
+    {
+        const response = yield axios.get(url)
+        yield put(actions.getListDetailNewsByIdJustOne(response.data))
     }
     catch (e) {
         yield put(actions.getSiteFail(e))
@@ -82,13 +99,14 @@ export  function* getDetailNewsx() {
 }
 export function* addDetailNews(action) {
     const token = localStorage.getItem("access_token")
-    // let id = action.id
+    console.log("sagaid",action.id)
     const paramdetail = {
-        nameDetail:action.nameDetail,
-        orderDetail:action.orderDetail,
+        nameNews:action.nameDetail,
+        orderNews:action.orderDetail,
+        idNews:action.id
     }
     const queryParams = '?auth='+token
-    const url = `listStatusNews.json` + queryParams;
+    const url = `listStatusNews.json` + queryParams ;
     try
     {
        const response =  yield axios.post(url,paramdetail)

@@ -8,6 +8,7 @@ const innitalState = {
     error: null,
     loading: false,
     nameDetail:[],
+    nameDetailJustOnePopUp:[]
 
 }
 const TrelloSite = (action, state) => {
@@ -33,7 +34,9 @@ const getDetailStatus = (action, state) => {
     // console.log("123456reducer",action.listNews)
     return updateobject(state,{nameDetail: action.listNews})
 }
-
+const getListDetailStatusJustOne = (action, state) => {
+    return updateobject(state, {nameDetailJustOnePopUp:action.data})
+}
 const reducer = (state = innitalState, action) => {
     // console.log("state action old",state,action)
     switch (action.type) {
@@ -50,6 +53,10 @@ const reducer = (state = innitalState, action) => {
         case actiontypes.LIST_DETAIL_NEWS:
             // console.log("123456",action.item)
             return getDetailStatus(action, state);
+        case actiontypes.GET_LIST_DETAIL_NEWS_ID_JUST_ONE:
+            // console.log("123456",action.item)
+            return getListDetailStatusJustOne(action, state);
+
             default:
             return state
     }

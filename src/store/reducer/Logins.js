@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actiontypes';
 import { updateobject } from "../../share/utility";
-import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
+import { REHYDRATE } from 'redux-persist';
 const initialState = {
     token:null,
     userId:null,
@@ -31,6 +30,7 @@ const RedirectSinIn = (action,state) => {
 const reducer = (state =initialState,action) =>{
     // console.log("action reducer",action)
     switch (action.type) {
+        // case REHYDRATE:
         case actionTypes.LOGIN_SUCCESS_TOKEN : return signInTokenTrue(action,state);
         case actionTypes.AUTH_LOGIN_FAIL : return loginFail(action,state);
         case actionTypes.AUTH_SIGNUP_SUCCESS : return signUpTrue(action,state);
@@ -40,9 +40,4 @@ const reducer = (state =initialState,action) =>{
             return state
     }
 }
-const persistConfig = {
-    key: 'auth',
-    storage: storage,
-    whitelist: ['token']
-};
-export default persistReducer(persistConfig,reducer);
+export default reducer;

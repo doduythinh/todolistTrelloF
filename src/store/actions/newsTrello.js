@@ -64,11 +64,12 @@ export const getById = (id) =>{
         id:id
     }
 }
-export const addNewsDetail = (nameDetail,orderDetail) => {
+export const addNewsDetail = (nameDetail,orderDetail,id) => {
     return {
         type:actionTypes.ADD_DETAIL_NEWS,
         nameDetail:nameDetail,
-        orderDetail:orderDetail
+        orderDetail:orderDetail,
+        id:id
     }
 }
 export const getDetailNews = (listNews) => {
@@ -79,8 +80,26 @@ export const getDetailNews = (listNews) => {
     }
 
 }
-export const getListDetailNews = () => {
+export const getListDetailNews = (id) => {
     return {
-        type:actionTypes.GET_LIST_DETAIL_NEWS
+        type:actionTypes.GET_LIST_DETAIL_NEWS,
+        id:id
+    }
+}
+export const getListDetailNewsById = (id) => {
+    return {
+        type:actionTypes.GET_LIST_DETAIL_NEWS_ID,
+        id:id
+    }
+}
+export const getListDetailNewsByIdData = () => {
+    return {
+        type:actionTypes.GET_LIST_DETAIL_NEWS_ID_DATA,
+    }
+}
+export const getListDetailNewsByIdJustOne = (data) => {
+    return {
+        type:actionTypes.GET_LIST_DETAIL_NEWS_ID_JUST_ONE,
+        data:data
     }
 }

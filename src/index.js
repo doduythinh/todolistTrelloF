@@ -4,14 +4,14 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import Main from './store/reducer/newsTrello';
-import Auth from './store/reducer/Logins';
+import mainReducer from './store/reducer/newsTrello';
+import authReducer from './store/reducer/Logins';
 
 import { BrowserRouter } from "react-router-dom";
 import  { Provider } from "react-redux";
 import  createSagaMiddleware from "redux-saga";
 import  { applyMiddleware, compose, createStore, combineReducers} from 'redux';
-import { Maincall,login } from './store/saga/index';
+import { mainCall,loGin } from './store/saga/index';
 
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -24,10 +24,18 @@ const persistConfig = {
     key: 'root',
     storage: storage,
     stateReconciler: autoMergeLevel2 ,// Xem thêm tại mục "Quá trình merge".
+    blacklist: ['auth'],
+
 };
+const authPersistConfig  = {
+    key: 'auth',
+    storage: storage,
+    blacklist: ['token']
+};
+// console.log("persistConfig",persistConfig,"authPersistConfig",authPersistConfig)
 const rootReducer = combineReducers({
-    main:Main,
-    auth:Auth
+    main:mainReducer,
+    auth:persistReducer(authPersistConfig,authReducer)
 })
 const pReducer = persistReducer(persistConfig, rootReducer);
 const sagamidleware = createSagaMiddleware();
@@ -35,10 +43,10 @@ const store = createStore(pReducer,composeEnhancers(
   applyMiddleware(sagamidleware)
 ))
 const persistor = persistStore(store);
-sagamidleware.run(Maincall)
-sagamidleware.run(login)
+sagamidleware.run(mainCall)
+sagamidleware.run(loGin)
 const app = (
-  <Provider store={store} persistor={persistor}>
+  <Provider store={store}>
     <BrowserRouter>
         <PersistGate persistor={persistor}>
              <App />

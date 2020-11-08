@@ -24,8 +24,6 @@ class NewsTrellos extends Component {
         this.addToStatus = this.addToStatus.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.changeListStatus = this.changeListStatus.bind(this);
-        this.addStatusDetail = this.addStatusDetail.bind(this)
-        this.onChangeStatusDetail = this.onChangeStatusDetail.bind(this)
     }
     //get take data
     onChangeStatus = (event) => {
@@ -68,26 +66,13 @@ class NewsTrellos extends Component {
         event.preventDefault()
         await this.setState({id: key})
     }
-    onChangeStatusDetail = (event) => {
-        event.preventDefault();
-        console.log(event.target.value)
-        this.setState({nameDetail: event.target.value})
-    }
-    addStatusDetail = (event) => {
-        event.preventDefault();
-        console.log(this.props.onAddNewDetail(this.state.nameDetail,this.state.orderDetail))
-    }
     componentDidMount(){
         //get data Status
         this.props.ongetNews();
-        //get data listStatus
-        this.props.ongetNewDetail();
     }
     componentWillUnmount() {
         //remove data Status
         this.props.ongetNews();
-        //remove data listStatus
-        this.props.ongetNewDetail();
     }
 
     render() {
@@ -97,6 +82,7 @@ class NewsTrellos extends Component {
          mapListName =
             Object.keys(this.props.listStatus).map((key) => (
                 <NewTrello
+                    key={key}
                     id={key}
                     changeStatus={(e)=>this.changeListStatus(key,e)}
                     stated={this.state.id}
@@ -104,9 +90,9 @@ class NewsTrellos extends Component {
                     listStatus={this.props.listStatus[key].name}
                     clicked={(e)=>this.changeStateShow(key,e)}
                     changed={this.onChangeStatus}
-                    changedDetail={this.onChangeStatusDetail}
-                    submitDetail={this.addStatusDetail}
-                    listdetailStatus={this.props.listStatusDetail}
+                    // changedDetailStatus={this.onChangeStatusDetail}
+                    // addDetailStatus={(e)=>this.addStatusDetail(e,key)}
+                    // listdetailStatus={this.props.listStatusDetail}
                 />
                 )
             )
@@ -136,7 +122,6 @@ const mapStateToProps = state => {
     return {
         listStatus: state.main.name,
         order: state.main.order,
-        listStatusDetail: state.main.nameDetail
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -145,8 +130,6 @@ const mapDispatchToProps = dispatch => {
         ongetNews: () => dispatch(actions.getSite()),
         onDeleteNews: (id) => dispatch(actions.deleteNewsSite(id)),
         onUpdateNews: (name, order, id) => dispatch(actions.updateNews(name, order, id)),
-        onAddNewDetail:(nameDetail,orderDetail) => dispatch(actions.addNewsDetail(nameDetail,orderDetail)),
-        ongetNewDetail:() => dispatch(actions.getListDetailNews())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(NewsTrellos);
