@@ -35,6 +35,7 @@ const getDetailStatus = (action, state) => {
     return updateobject(state,{nameDetail: action.listNews})
 }
 const getListDetailStatusJustOne = (action, state) => {
+    console.log("reducer",action.data)
     return updateobject(state, {nameDetailJustOnePopUp:action.data})
 }
 const reducer = (state = innitalState, action) => {

@@ -73,7 +73,7 @@ const NewTrello  = (props) =>
                             { props.listStatusDetail ? Object.keys(props.listStatusDetail).map(key=> {
                                 // console.log("keykeykeykey", key);
                                 return props.id === props.listStatusDetail[key].idNews ?
-                                    <input
+                                <input
                                         className="form-control" key={key}
                                         defaultValue={props.listStatusDetail[key].nameNews}
                                         onChange={props.changedDetail}
@@ -115,7 +115,7 @@ const NewTrello  = (props) =>
 }
 
 const mapStateToProps = state =>{
-    // console.log("mainDetailStatus",state.main.nameDetail)
+    console.log("mainDetailStatus",state.main.listStatusJustOne)
     return {
         listStatusDetail: state.main.nameDetail,
         listStatusJustOne:state.main.nameDetailJustOnePopUp

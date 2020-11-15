@@ -70,7 +70,7 @@ export function* updateNews(action){
 export  function* getDetailNewsx(action) {
     const token = localStorage.getItem("access_token")
     const id = action.id
-    const queryParams = `?auth=` + token + `&` +`idNews=${id}`;
+    const queryParams = `?auth=` + token +`&orderBy="idNews"`+`&equalTo="${id}"`;
     const url = `listStatusNews.json` + queryParams;
     try
     {
