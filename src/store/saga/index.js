@@ -4,7 +4,7 @@ import {
     addNews,getNews,delelteNews,
     updateNews,getDetailNewsx,addDetailNews,
     getDetailNewsById
-} from "./newsTrello";
+} from "./NewsTrello";
 import { signIn,signUp,
     authcheckStateSaga,
     logoutSaga,

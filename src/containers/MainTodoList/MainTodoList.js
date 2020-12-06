@@ -9,11 +9,10 @@ import { BsTable } from "react-icons/bs";
 import { GrCircleInformation } from "react-icons/gr";
 import { BiUserCircle } from "react-icons/bi";
 import { IoMdApps } from "react-icons/io";
-import Background from '../../component/background/background';
-import  * as actions from '../../store/actions/index';
-class Main extends Component{
-    constructor(){
-        super();
+import Background from '../../component/BackgroundTodoList/BackgroundTodoList';
+class MainTodoList extends Component{
+    constructor(props){
+        super(props);
         this.state = {
 
         }
@@ -43,5 +42,4 @@ class Main extends Component{
     }    
 
 }
-
-export default Main;
+export default MainTodoList;

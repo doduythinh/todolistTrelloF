@@ -75,7 +75,7 @@ export  function* getDetailNewsx(action) {
     try
     {
         const response = yield axios.get(url)
-        console.log("123456saga",response.data)
+        // console.log("123456saga",response.data)
         yield put(actions.getDetailNews(response.data))
     }
     catch (e) {
@@ -91,6 +91,7 @@ export  function* getDetailNewsById(action) {
     try
     {
         const response = yield axios.get(url)
+        console.log("getDetailNewsById",response.data)
         yield put(actions.getListDetailNewsByIdJustOne(response.data))
     }
     catch (e) {
@@ -99,7 +100,7 @@ export  function* getDetailNewsById(action) {
 }
 export function* addDetailNews(action) {
     const token = localStorage.getItem("access_token")
-    console.log("sagaid",action.id)
+    // console.log("sagaid",action.id)
     const paramdetail = {
         nameNews:action.nameDetail,
         orderNews:action.orderDetail,
@@ -114,6 +115,6 @@ export function* addDetailNews(action) {
         yield getDetailNewsx()
     }
     catch (e) {
-        yield put(actions.getSiteFail(e))
+        yield put(actions.addNewsByIdFails(e))
     }
 }

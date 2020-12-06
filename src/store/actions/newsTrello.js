@@ -72,11 +72,11 @@ export const addNewsDetail = (nameDetail,orderDetail,id) => {
         id:id
     }
 }
-export const getDetailNews = (listNews) => {
-    // console.log("123456action",listNews)
+export const getDetailNews = (listStatusByid) => {
+    // console.log("123456action",listStatusByid)
     return {
         type: actionTypes.LIST_DETAIL_NEWS,
-        listNews: listNews,
+        listStatusByid: listStatusByid,
     }
 
 }
@@ -101,5 +101,12 @@ export const getListDetailNewsByIdJustOne = (data) => {
     return {
         type:actionTypes.GET_LIST_DETAIL_NEWS_ID_JUST_ONE,
         data:data
+    }
+}
+export const addNewsByIdFails = (error) => {
+    return {
+        type:actionTypes.ADD_SITES_FAILS,
+        error:error
+
     }
 }

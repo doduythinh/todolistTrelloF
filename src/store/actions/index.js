@@ -14,7 +14,8 @@ export {
     getListDetailNews,
     getListDetailNewsById,
     getListDetailNewsByIdData,
-    getListDetailNewsByIdJustOne
+    getListDetailNewsByIdJustOne,
+    addNewsByIdFails
 } from './newsTrello';
 
 export {

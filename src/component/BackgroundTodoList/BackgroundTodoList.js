@@ -13,9 +13,9 @@ import { GrClearOption } from "react-icons/gr";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { TiLockClosedOutline } from "react-icons/ti";
 import { BsFillStarFill } from "react-icons/bs";
-import Sites from "../Sites/newsTrellos";
+import Sites from "../SitesTodoList/NewsTrellos";
 import {connect} from "react-redux";
-class BackgroundImagePage extends Component{
+class backgroundTodoList extends Component{
     render() {
         return (
             <div className="bg">
@@ -46,4 +46,4 @@ class BackgroundImagePage extends Component{
         );
     }
 }
-export default BackgroundImagePage;
+export default backgroundTodoList;

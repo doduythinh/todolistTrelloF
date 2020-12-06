@@ -1,12 +1,11 @@
 import React, {Component} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     DropdownItem, Button, Nav, Form, Toast,
-    Dropdown, DropdownToggle, Col, DropdownMenu, Container, Navbar, NavItem
+    Dropdown, DropdownToggle, Col, DropdownMenu, Container, Navbar, NavItem,Row
 } from 'react-bootstrap';
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
-import './newsTrello.css';
+import './NewsTrellos.scss';
 import HorizontalScroll from 'react-scroll-horizontal';
 import NewTrello from "./NewTrello/NewTrello";
 class NewsTrellos extends Component {
@@ -23,7 +22,7 @@ class NewsTrellos extends Component {
         }
         this.addToStatus = this.addToStatus.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
-        this.changeListStatus = this.changeListStatus.bind(this);
+        this.editListStatus = this.editListStatus.bind(this);
     }
     //get take data
     onChangeStatus = (event) => {
@@ -48,7 +47,7 @@ class NewsTrellos extends Component {
         this.props.onDeleteNews(id);
     }
     //change to list Status
-    changeListStatus = async (id,event) => {
+    editListStatus = async (id,event) => {
         // console.log("12312312",event.key   == 'Enter')
         if(event.key == 'Enter' && event.target.value != '') {
             event.preventDefault()
@@ -84,22 +83,19 @@ class NewsTrellos extends Component {
                 <NewTrello
                     key={key}
                     id={key}
-                    changeStatus={(e)=>this.changeListStatus(key,e)}
+                    changeStatus={(e)=>this.editListStatus(key,e)}
                     stated={this.state.id}
                     deleted={(e)=>this.deleteToStatus(key,e)}
                     listStatus={this.props.listStatus[key].name}
                     clicked={(e)=>this.changeStateShow(key,e)}
                     changed={this.onChangeStatus}
-                    // changedDetailStatus={this.onChangeStatusDetail}
-                    // addDetailStatus={(e)=>this.addStatusDetail(e,key)}
-                    // listdetailStatus={this.props.listStatusDetail}
                 />
                 )
             )
         return (
             <div className="wrapper">
                 {mapListName}
-                <Col xs={3}>
+                <Col xs={3} md={3} sm={3}>
                     <Toast>
                         <Form onSubmit={this.addToStatus}>
                             <Toast.Body> <input

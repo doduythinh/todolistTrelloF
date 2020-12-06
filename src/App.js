@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+
 import './App.css';
-import Main from './containers/Main/main';
+
+import Main from './containers/MainTodoList/MainTodoList';
 import SignIn from './containers/logins/SignUp/SignUp';
 import Logins from './containers/logins/SignIn/logins';
 import { Route, Switch, withRouter , Redirect } from 'react-router-dom'
 import  { connect } from 'react-redux';
-import * as actions from './store/actions/index';
-import asyncComponent from "./hoc/asyncComponent/asyncComponent";
-
-const asyncMain = asyncComponent(()=>{
-    return import('./containers/Main/main');
-})
-// const asyncLogin = asyncComponent(()=>{
-//     return import('./containers/Main/main');
-// })
-// console.log("123456",asyncMain)
 class App extends Component {
     componentDidMount() {
         // this.props.onTryAutoSignup();
@@ -44,13 +36,11 @@ class App extends Component {
         return (
           <div className="App">
               {route}
-              {/*{console.log("route",route)}*/}
           </div>
         );
       }
 }
 const mapSateToProps = state => {
-    // console.log("123123 state.auth.token",state.auth.token)
     return {
         isAuthenticated: state.auth.token !== null,
     }

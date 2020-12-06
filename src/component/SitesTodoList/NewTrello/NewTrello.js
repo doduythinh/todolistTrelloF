@@ -2,11 +2,12 @@ import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Toast,Form,Button,Modal} from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
-import "../newsTrello.css";
+import "../NewsTrellos.scss";
 import {connect} from "react-redux";
 import * as actions from "../../../store/actions";
 const NewTrello  = (props) =>
 {
+
     const [show, setShow] = useState(false);
     const INITIAL_STATE = {
         nameDetail: "",
@@ -15,12 +16,9 @@ const NewTrello  = (props) =>
     }
     const [state,setState] = useState(INITIAL_STATE)
     useEffect(()=>{
-        // async function getNewsStatus()
-        // {
-            props.ongetNewDetail(props.id)
-        // }
-        // getNewsStatus()
+        props.ongetNewDetail(props.id)
     },[])
+
     function changedDetailStatus(event) {
         event.preventDefault()
         console.log(event.target.value)
@@ -29,7 +27,7 @@ const NewTrello  = (props) =>
 
     function addDetailStatus(event,id) {
         event.preventDefault()
-         id = props.id
+        id = props.id
         // console.log("123456",props.listStatusDetail)
         let count = 0;
         if(props.listStatusDetail)
@@ -51,7 +49,6 @@ const NewTrello  = (props) =>
     function popUpFalse(key) {
         setShow(false)
     }
-
     return (
         <Col xs={3} key={props.id}>
                 <Toast>
@@ -91,7 +88,9 @@ const NewTrello  = (props) =>
                             >
                                 <Modal.Header closeButton>
                                     <Modal.Title id="example-custom-modal-styling-title">
-                                        {props.listStatusJustOne.nameNews?props.listStatusJustOne.nameNews: ''}
+                                        {
+                                            props.listStatusJustOne ? props.listStatusJustOne.nameNews : null
+                                        }
                                     </Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
@@ -115,9 +114,9 @@ const NewTrello  = (props) =>
 }
 
 const mapStateToProps = state =>{
-    console.log("mainDetailStatus",state.main.listStatusJustOne)
+    // console.log("mainDetailStatus",state.main.listStatusByid)
     return {
-        listStatusDetail: state.main.nameDetail,
+        listStatusDetail: state.main.listStatusByid,
         listStatusJustOne:state.main.nameDetailJustOnePopUp
     }
 }
