@@ -3,61 +3,67 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Col, Toast,Form,Button,Modal} from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 import "../NewsTrellos.scss";
-import {connect} from "react-redux";
+import {connect,useDispatch,useSelector} from "react-redux";
 import * as actions from "../../../store/actions";
-const NewTrello  = (props) =>
+const NewTrello  = (props,id) =>
 {
-
+    const listStatusDetail = useSelector(state=>state.main.listStatusByid);
+    const listStatusJustOne = useSelector(state=>state.main.nameDetailJustOnePopUp);
+    // console.log("listStatusDetail",listStatusDetail,"listStatusJustOne",listStatusJustOne)
     const [show, setShow] = useState(false);
     const INITIAL_STATE = {
         nameDetail: "",
         orderDetail: 1,
         id:""
     }
-    const [state,setState] = useState(INITIAL_STATE)
+    const [state,setState] = useState(INITIAL_STATE);
+    let dispatch = useDispatch();
     useEffect(()=>{
-        props.ongetNewDetail(props.id)
+        let action = actions.getListDetailNews(id);
+        dispatch(action);
     },[])
 
-    function changedDetailStatus(event) {
-        event.preventDefault()
-        console.log(event.target.value)
-        setState({...state,nameDetail:event.target.value})
+    const changedDetailStatus = (event) =>{
+        event.preventDefault();
+        console.log(event.target.value);
+        setState({...state,nameDetail:event.target.value});
     }
 
-    function addDetailStatus(event,id) {
+    const addDetailStatus = (event,id) =>{
         event.preventDefault()
         id = props.id
         // console.log("123456",props.listStatusDetail)
         let count = 0;
         if(props.listStatusDetail)
         {
-            count = Object.keys(props.listStatusDetail).length
+            count = Object.keys(props.listStatusDetail).length;
         }
-        console.log("count",count)
-        setState({...state,orderDetail:count+1})
-        props.onAddNewDetail(state.nameDetail,state.orderDetail,id)
+        console.log("count",count);
+        setState({...state,orderDetail:count+1});
+        let action = actions.addNewsDetail(state.nameDetail,state.orderDetail,id);
+        dispatch(action);
     }
 
-    function popUpTrue(event,key) {
+    const popUpTrue = (event,key)  => {
         // alert(key);
         setShow(true)
         setState({...state,id:key})
-        props.ongetNewsDetailByID(key)
+        let action = actions.getListDetailNewsById(key);
+        dispatch(action);
     }
 
     function popUpFalse(key) {
         setShow(false)
     }
     return (
-        <Col xs={3} key={props.id}>
+        <Col xs={3} key={id}>
                 <Toast>
                     <Toast>
                         <strong  onClick={props.clicked}
                                  className="mr-auto strong">{props.listStatus}
                         </strong>
                         <AiOutlineClose className="daux" size={20}  onClick={props.deleted}/>
-                        {props.stated === props.id ? <div onKeyUp={props.changeStatus}><input
+                        {props.stated === id ? <div onKeyUp={props.changeStatus}><input
                             // ref="inputTarget"
                             type="text"
                             className="form-control texarea"
@@ -67,12 +73,14 @@ const NewTrello  = (props) =>
                     </Toast>
                     <Toast.Body>
                         <>
-                            { props.listStatusDetail ? Object.keys(props.listStatusDetail).map(key=> {
+                            {
+                                listStatusDetail ? Object.keys(listStatusDetail).map(key=> {
                                 // console.log("keykeykeykey", key);
-                                return props.id === props.listStatusDetail[key].idNews ?
+                                //     console.log("listStatusDetail",listStatusDetail[key].idNews)
+                                return props.id === listStatusDetail[key].idNews ?
                                 <input
                                         className="form-control" key={key}
-                                        defaultValue={props.listStatusDetail[key].nameNews}
+                                        defaultValue={listStatusDetail[key].nameNews}
                                         onChange={props.changedDetail}
                                         onClick={(event) => popUpTrue(event,key)}
                                     /> : ''
@@ -89,7 +97,7 @@ const NewTrello  = (props) =>
                                 <Modal.Header closeButton>
                                     <Modal.Title id="example-custom-modal-styling-title">
                                         {
-                                            props.listStatusJustOne ? props.listStatusJustOne.nameNews : null
+                                            listStatusJustOne ? listStatusJustOne.nameNews : null
                                         }
                                     </Modal.Title>
                                 </Modal.Header>
@@ -113,20 +121,20 @@ const NewTrello  = (props) =>
     )
 }
 
-const mapStateToProps = state =>{
-    // console.log("mainDetailStatus",state.main.listStatusByid)
-    return {
-        listStatusDetail: state.main.listStatusByid,
-        listStatusJustOne:state.main.nameDetailJustOnePopUp
-    }
-}
+// const mapStateToProps = state =>{
+//     console.log("mainDetailStatus",state.main.listStatusByid)
+//     return {
+//         listStatusDetail: state.main.listStatusByid,
+//         listStatusJustOne:state.main.nameDetailJustOnePopUp
+//     }
+// }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onAddNewDetail:(nameDetail,orderDetail,id) => dispatch(actions.addNewsDetail(nameDetail,orderDetail,id)),
-        ongetNewDetail:(id) => dispatch(actions.getListDetailNews(id)),
-        ongetNewsDetailByID:(id) => dispatch(actions.getListDetailNewsById(id))
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         onAddNewDetail:(nameDetail,orderDetail,id) => dispatch(actions.addNewsDetail(nameDetail,orderDetail,id)),
+//         ongetNewDetail:(id) => dispatch(actions.getListDetailNews(id)),
+//         ongetNewsDetailByID:(id) => dispatch(actions.getListDetailNewsById(id))
+//     }
+// }
 
-export default connect(mapStateToProps,mapDispatchToProps)(NewTrello);
+export default NewTrello;

@@ -35,17 +35,17 @@ class  SignUp extends Component{
         let mailError = "";
         let passwordError = "";
         let publicm = "";
-        console.log("123456",this.state.email.includes('@gmail.com'))
+        // console.log("123456",this.state.email.includes('@gmail.com'))
         if(!this.state.email.includes('@gmail.com') && !'')
         {
             mailError = "invalid email";
         }
-        console.log("465798",this.state.passwordError !== this.state.againspasswordError)
+        // console.log("465798",this.state.passwordError !== this.state.againspasswordError)
         if(this.state.passwordError == this.state.againspasswordError && ! '')
         {
             publicm = 'charactor right = ';
         }
-        console.log("46579811",this.state.passwordError >=6)
+        // console.log("46579811",this.state.passwordError >=6)
         if(this.state.passwordError >=6 && !'')
         {
             passwordError = "password 6 charactor"

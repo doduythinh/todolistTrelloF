@@ -64,7 +64,6 @@ export function* updateNews(action){
     catch (e) {
         yield put(actions.getSiteFail(e))
     }
-
 }
 
 export  function* getDetailNewsx(action) {
@@ -91,7 +90,7 @@ export  function* getDetailNewsById(action) {
     try
     {
         const response = yield axios.get(url)
-        console.log("getDetailNewsById",response.data)
+        // console.log("getDetailNewsById",response.data)
         yield put(actions.getListDetailNewsByIdJustOne(response.data))
     }
     catch (e) {
@@ -111,7 +110,7 @@ export function* addDetailNews(action) {
     try
     {
        const response =  yield axios.post(url,paramdetail)
-        console.log(response)
+        // console.log(response)
         yield getDetailNewsx()
     }
     catch (e) {

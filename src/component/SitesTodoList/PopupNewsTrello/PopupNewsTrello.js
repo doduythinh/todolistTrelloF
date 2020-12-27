@@ -30,7 +30,7 @@ const  PopupNewsTrello = (props) => {
         {
             count = Object.keys(props.listStatusDetail).length
         }
-        console.log("count",count)
+        // console.log("count",count)
         setState({...state,orderDetail:count+1})
         props.onAddNewDetail(state.nameDetail,state.orderDetail,id)
     }

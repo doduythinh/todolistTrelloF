@@ -23,7 +23,7 @@ export function* signIn(action){
     let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDahBG6XytMySHh1um9YBIk-F3oyuAYcEQ';
     try{
         const response =  yield axios.post(url,postapi)
-        console.log("api login",response)
+        // console.log("api login",response)
         yield localStorage.setItem('access_token',response.data.idToken)
         yield localStorage.setItem('userId',response.data.localId)
         yield put(actions.signInSuccess(response.data.idToken,response.data.localId))
