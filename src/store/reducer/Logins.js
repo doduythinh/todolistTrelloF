@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actiontypes';
-import { updateobject } from "../../share/utility";
+import { updateobject } from "../utility";
 import { REHYDRATE } from 'redux-persist';
 const initialState = {
     token:null,

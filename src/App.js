@@ -1,53 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-
-import './App.css';
+import React from 'react';
+import './App.scss';
 
 import Main from './containers/MainTodoList/MainTodoList';
 import SignIn from './containers/logins/SignUp/SignUp';
 import Logins from './containers/logins/SignIn/logins';
-import { Route, Switch, withRouter , Redirect } from 'react-router-dom'
-import  { connect } from 'react-redux';
-class App extends Component {
-    componentDidMount() {
-        // this.props.onTryAutoSignup();
-    }
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
+import {connect, useSelector} from 'react-redux';
 
-    render(){
-        let route = (
+const App = () => {
+
+    let route = (
+        <Switch>
+            <Route path="/signup" component={SignIn}/>
+            <Route path="/login" component={Logins}/>
+            <Redirect to="/login"/>
+        </Switch>
+    )
+    let isAuthenticated = useSelector(state => state.auth.token !== null)
+    // console.log("app isAuthenticated",this.props.isAuthenticated)
+    if (isAuthenticated) {
+        route = (
             <Switch>
-              <Route path="/signup" component={SignIn} />
-              <Route path="/login" component={Logins} />
-              <Redirect to="/login" />
+                <Route path="/main" component={Main}/>
+                <Route path="/signup" component={SignIn}/>
+                <Route path="/login" component={Logins}/>
+                <Redirect to="/main"/>
             </Switch>
-      )
-        // console.log("app isAuthenticated",this.props.isAuthenticated)
-        if(this.props.isAuthenticated)
-            {
-                route = (
-                    <Switch>
-                            <Route path="/main" component={Main} />
-                            <Route path="/signup" component={SignIn} />
-                            <Route path="/login" component={Logins} />
-                            <Redirect to="/main" />
-                    </Switch>
-                )
-            }
-        return (
-          <div className="App">
-              {route}
-          </div>
-        );
-      }
-}
-const mapSateToProps = state => {
-    return {
-        isAuthenticated: state.auth.token !== null,
+        )
     }
+    return (
+        <div className="App">
+            {route}
+        </div>
+    );
 }
-const mapDispatchToProps = dispatch => {
-    return {
-        // onTryAutoSignup: ()=>dispatch(actions.authCheckState())
-    }
-}
-export default withRouter(connect(mapSateToProps,mapDispatchToProps)(App));
+export default withRouter(App);

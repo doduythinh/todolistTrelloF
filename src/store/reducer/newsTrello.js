@@ -1,5 +1,5 @@
 import * as actiontypes from '../actions/actiontypes';
-import {updateobject} from '../../share/utility';
+import { updateobject } from "../utility";
 
 const innitalState = {
     site1: false,

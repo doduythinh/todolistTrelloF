@@ -1,0 +1,10 @@
+.grid--backgroundImage {
+    height: 95vh;
+    background-image: linear-gradient(to right bottom, rgba(120, 120, 120, .8), rgba(120, 120, 120, .8)),
+    url('../../../asset/img/img_nature.jpg');
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    -webkit-clip-path: ellipse(60% 60% at 50% 33%);
+    clip-path: ellipse(60% 60% at 50% 33%);
+}

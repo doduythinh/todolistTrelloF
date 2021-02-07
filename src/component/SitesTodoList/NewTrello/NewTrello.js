@@ -5,7 +5,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import "../NewsTrellos.scss";
 import {connect,useDispatch,useSelector} from "react-redux";
 import * as actions from "../../../store/actions";
-const NewTrello  = (props,id) =>
+const NewTrello  = ({props,key,id,changeStatus,stated,
+                        deleted,listStatus,clicked,changed}) =>
 {
     const listStatusDetail = useSelector(state=>state.main.listStatusByid);
     const listStatusJustOne = useSelector(state=>state.main.nameDetailJustOnePopUp);
@@ -32,7 +33,6 @@ const NewTrello  = (props,id) =>
     const addDetailStatus = (event,id) =>{
         event.preventDefault()
         id = props.id
-        // console.log("123456",props.listStatusDetail)
         let count = 0;
         if(props.listStatusDetail)
         {
@@ -59,32 +59,32 @@ const NewTrello  = (props,id) =>
         <Col xs={3} key={id}>
                 <Toast>
                     <Toast>
-                        <strong  onClick={props.clicked}
-                                 className="mr-auto strong">{props.listStatus}
+                        <strong  onClick={clicked}
+                                 className="mr-auto strong">{listStatus}
                         </strong>
-                        <AiOutlineClose className="daux" size={20}  onClick={props.deleted}/>
-                        {props.stated === id ? <div onKeyUp={props.changeStatus}><input
+                        <AiOutlineClose className="daux" size={20}  onClick={deleted}/>
+                        {stated === id && <div onKeyUp={changeStatus}><input
                             // ref="inputTarget"
                             type="text"
                             className="form-control texarea"
-                            defaultValue={props.listStatus}
-                            onChange={props.changed}
-                        /></div> : <div></div>}
+                            defaultValue={listStatus}
+                            onChange={changed}
+                        /></div>}
                     </Toast>
                     <Toast.Body>
                         <>
                             {
-                                listStatusDetail ? Object.keys(listStatusDetail).map(key=> {
+                                listStatusDetail && Object.keys(listStatusDetail).map(key=> {
                                 // console.log("keykeykeykey", key);
                                 //     console.log("listStatusDetail",listStatusDetail[key].idNews)
-                                return props.id === listStatusDetail[key].idNews ?
+                                return id === listStatusDetail[key].idNews &&
                                 <input
                                         className="form-control" key={key}
                                         defaultValue={listStatusDetail[key].nameNews}
                                         onChange={props.changedDetail}
                                         onClick={(event) => popUpTrue(event,key)}
-                                    /> : ''
-                            }) : ''}
+                                    />
+                            }) }
                             <Form onSubmit={(e,id)=>addDetailStatus(e,id)}>
                                 <input className="form-control" onChange={changedDetailStatus} />
                             </Form>
@@ -128,7 +128,7 @@ const NewTrello  = (props,id) =>
 //         listStatusJustOne:state.main.nameDetailJustOnePopUp
 //     }
 // }
-
+//
 // const mapDispatchToProps = dispatch => {
 //     return {
 //         onAddNewDetail:(nameDetail,orderDetail,id) => dispatch(actions.addNewsDetail(nameDetail,orderDetail,id)),
